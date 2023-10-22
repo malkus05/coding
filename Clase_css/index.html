@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Google Search</title>
+  <style>
+    /* Estilos para el formulario de búsqueda */
+    body {
+      font-family: Arial, sans-serif;
+    }
+
+    #search-form {
+      max-width: 600px;
+      margin: 0 auto;
+      text-align: center;
+      padding: 300px;
+
+    }
+
+    #search-input {
+      width: 100%;
+      padding: 10px;
+      font-size: 16px;
+    }
+
+    #search-button {
+      padding: 10px 20px;
+      font-size: 16px;
+      background-color: #f2f2f2;
+      border-radius: 10%;
+      cursor: pointer;
+    }
+
+    #search-button:hover {
+      background-color: #e0e0e0;
+    }
+  </style>
+</head>
+<body>
+  <div id="search-form">
+    <form action="https://www.google.com/search" method="GET" target="_blank">
+      <input id="search-input" type="text" name="q" placeholder="Buscar en Google">
+      <br>
+      <input id="search-button" type="submit" value="Buscar">
+    </form>
+  </div>
+</body>
+</html>

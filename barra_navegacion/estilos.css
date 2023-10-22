@@ -1,0 +1,25 @@
+#navegacion{
+    background-color:#FF0001;
+}
+body{
+    margin: 0%;
+    padding: 0%;
+}
+#logo{
+    height: 90px;
+    margin: 5px;
+    padding: 5px;
+}
+.link{
+
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    font-size: 110%;
+    color: white;
+    text-decoration: none; 
+    float: right;
+    padding: 50px;
+    padding-top: 50px;
+    padding-bottom: 50px;
+    padding-right: 25px;
+    padding-left: 25px;
+}

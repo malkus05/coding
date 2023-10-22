@@ -1,0 +1,72 @@
+h1{
+
+    color: rgb(0, 0, 0);
+
+}
+h3{
+
+    color: rgb(0, 0, 0);
+
+}
+p{
+
+    font-size: 100%;
+    color: rgb(0, 0, 0);
+    
+}
+header{
+    color: #FF0001;
+    display:flex;
+    flex-flow:nowrap;
+    justify-content: space-around;
+    align-items: flex-start;
+    max-width: 100%;
+
+}
+/*se pone #cuando es id - si es class es con . */
+#nombre{
+
+    color: blue;
+
+ }
+
+.parrafo{
+
+    font-size: 100%;
+
+}
+
+#datos_personales{
+
+    font-size: 100%;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-style: italic;
+}
+.class.profile-description{
+
+    font-size: 100%;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-style: italic;
+    
+}
+/*Estilos para la barra de Navegacion*/
+#navegacion{
+    background-color:#FF0001;
+}
+body{
+    margin: 0%;
+    padding: 0%;
+}
+.link{
+
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    font-size: 110%;
+    color: white;
+    text-decoration: none; 
+    float: right;
+    padding: 50px;
+    padding-top: 50px;
+    padding-bottom: 50px;
+    padding-right: 25px;
+    padding-left: 25px;
+}

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <title>Cajero Electrónico</title>
+</head>
+<body>
+    <div class="container">
+        <h1>Cajero Electrónico</h1>
+        <div id="account-selection">
+            <h2>Selecciona una cuenta:</h2>
+            <select id="account">
+                <option value="cuenta1">Cuenta Maycol</option>
+                <option value="cuenta2">Cuenta Gabriela</option>
+                <option value="cuenta3">Cuenta Nathaly</option>
+            </select>
+            <input type="password" id="password" placeholder="Ingrese su contraseña">
+            <button onclick="authenticate()">Ingresar</button>
+            <p id="message"></p>
+        </div>
+        <div id="operations" class="hidden">
+            <h2>Operaciones disponibles:</h2>
+            <button onclick="checkBalance()">Consultar Saldo</button>
+            <button onclick="deposit()">Ingresar Monto</button>
+            <button onclick="withdraw()">Retirar Monto</button>
+            <div id="transaction" class="hidden">
+                <span id="transaction-type"></span>
+                <input type="number" id="amount" placeholder="Ingrese el monto">
+                <button onclick="completeTransaction()">Aceptar</button>
+            </div>
+            <p id="result"></p>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>

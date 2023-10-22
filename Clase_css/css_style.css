@@ -1,0 +1,43 @@
+body{ 
+    
+    background-color: darkolivegreen;
+    margin: 2%;
+}
+nav{
+
+    background-color: whitesmoke;
+    color: aliceblue;
+     
+
+}
+.navegacion{
+
+    width: 95vw;
+    height: 5vh;
+    
+}
+.navegacion a{
+    
+    color: black;
+    font-size: large;
+    text-decoration: none;
+    font-style: italic;
+    text-align: center;
+    padding: 5%;
+    margin-top: 5%;
+}
+.navegacion a:hover{
+
+    background-color: orange;
+    color: blue;
+    border:solid chocolate 3px;
+    border-radius: 5px;
+    padding: 5%;
+    margin-top: 5%;
+    
+}
+_.navegacion a.activo  {
+
+ background-color: cornflowerblue;
+    
+}

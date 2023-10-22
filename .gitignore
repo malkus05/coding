@@ -1,0 +1,8 @@
+master
+node_modules
+pokedex/index.html
+pokedex/package-lock.json
+pokedex/package.json
+pokedex/script.js
+pokedex/yarn.lock
+main
