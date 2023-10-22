@@ -2,12 +2,10 @@ import './App.css';
 import { useState, usestate } from "react"
 import axios from "axios"
 
-
-
 function App (){
   
   const[Nombre, setNombre]= useState("")
-  const[Identificacion, setIdentificacion]= useState("0")
+  const[Edad, setEdad]= useState("0")
   const[Departamento, setDepartamento]= useState("")
   const[Cargo, setCargo]= useState("")
   const[Fecha_Ingreso, setfecha_Ingreso]= useState("")
@@ -16,8 +14,10 @@ function App (){
   const add =()=>{
     axios.post("http://localhost:3001/create",{
     nombre:Nombre,
-    departamento:Departamento,
+    edad: Edad,
+    departamento: Departamento,
     cargo:Cargo,
+    fecha_ingreso:Fecha_Ingreso,
     antiguedad:Antiguedad,
     }).then(()=>{
       alert("Empleado Registrado");
@@ -33,9 +33,9 @@ return (
         }}
         type  ="text"/></label>
 
-        <label>Identificacion: <input 
+        <label>Edad: <input 
         onChange={(event)=>{
-          setIdentificacion(event.target.value);
+          setEdad(event.target.value);
         }}
         type  ="text"/></label>
         <label>Departamento: <input
