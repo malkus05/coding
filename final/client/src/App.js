@@ -3,6 +3,11 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import 'bootstrap/dist/css/bootstrap.min.css';
 
+import Swal from 'sweetalert2'
+import withReactContent from 'sweetalert2-react-content'
+
+const notify = withReactContent(Swal)
+
 function App() {
   const [Nombre, setNombre] = useState("");
   const [Edad, setEdad] = useState(0);
@@ -28,8 +33,7 @@ function App() {
       fecha_ingreso: Fecha_Ingreso,
       antiguedad: Antiguedad,
     }).then(() => {
-      alert("Empleado Registrado");
-      getEmpleados();
+      limpiarCampos();
     });
   }
 
@@ -44,8 +48,20 @@ function App() {
       antiguedad: Antiguedad,
     }).then(() => {
       getEmpleados();
+      limpiarCampos();
     });
   }
+
+  const limpiarCampos = ()=>{
+    setNombre("");
+    setEdad("");
+    setDepartamento("");
+    setCargo("");
+    setFecha_Ingreso("");
+    setAntiguedad("");
+    setEditar(false);
+   }
+
 const editarEmpleado = (val)=>{
   setEditar(true);
 
@@ -132,7 +148,7 @@ const editarEmpleado = (val)=>{
         editar?
         <div>
         <button className="btn btn-warning m-2" onClick={update}>Actualizar</button>
-        <button className="btn btn-info m-2" onClick={add}>Cancelar</button>
+        <button className="btn btn-info m-2" onClick={limpiarCampos}>Cancelar</button>
         </div>
         :<button type="button" className="btn btn-success" onClick={add}>Registrar</button>
       }
