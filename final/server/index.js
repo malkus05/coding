@@ -51,6 +51,25 @@ app.get("/empleados", (req, res) => {
     });
 });
 
+app.put("/update", (req, res) => {
+    const nombre = req.body.id;
+    const edad = req.body.edad;
+    const departamento = req.body.departamento;
+    const cargo = req.body.cargo;
+    const fecha_ingreso = req.body.fecha_ingreso;
+    const antiguedad = req.body.antiguedad;
+
+    db.query("UPDATE empleados SET nombre=?, edad=?, departamento=?, cargo=?, fecha_ingreso=?, antiguedad=? WHERE id=?", [nombre, edad, departamento, cargo, fecha_ingreso, antiguedad, id], 
+         (err, result) => {
+            if (err) {
+                console.log(err);
+                res.status(500).json({ error: "Error al Actualizar el empleado" });
+            } else {
+                res.status(200).json({ message: "Empleado Actualizado con Éxito" });
+            }
+        });
+});
+
 app.listen(3001, () => {
     console.log("Corriendo en puerto 3001");
 });

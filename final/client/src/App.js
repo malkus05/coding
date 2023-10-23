@@ -10,7 +10,9 @@ function App() {
   const [Cargo, setCargo] = useState("");
   const [Fecha_Ingreso, setFecha_Ingreso] = useState("");
   const [Antiguedad, setAntiguedad] = useState(0);
+  const [id, setId] = useState(0);
 
+  const [editar, setEditar] = useState(false);
   const [empleadosList, setEmpleados] = useState([]);
 
   useEffect(() => {
@@ -30,6 +32,31 @@ function App() {
       getEmpleados();
     });
   }
+
+  const update = () => {
+    axios.put("http://localhost:3001/update", {
+      id: id,  
+      nombre: Nombre,
+      edad: Edad,
+      departamento: Departamento,
+      cargo: Cargo,
+      fecha_ingreso: Fecha_Ingreso,
+      antiguedad: Antiguedad,
+    }).then(() => {
+      getEmpleados();
+    });
+  }
+const editarEmpleado = (val)=>{
+  setEditar(true);
+
+  setNombre(val.nombre);
+  setEdad(val.edad);
+  setDepartamento(val.departamento);
+  setCargo(val.cargo);
+  setFecha_Ingreso(val.fecha_ingreso);
+  setAntiguedad(val.antiguedad);
+  setId(val.id);
+ }
 
   const getEmpleados = () => {
     axios.get("http://localhost:3001/empleados").then((response) => {
@@ -53,7 +80,7 @@ function App() {
         onChange={(event) => {
           setNombre(event.target.value);
         }}
-        className="form-control" placeholder="Ingrese su Nombre" aria-label="Username" aria-describedby="basic-addon1"/>
+        className="form-control" value={Nombre} placeholder="Ingrese su Nombre" aria-label="Username" aria-describedby="basic-addon1"/>
     </div>
 
     <div className="input-group mb-3">
@@ -62,7 +89,7 @@ function App() {
         onChange={(event) => {
           setEdad(event.target.value);
         }}
-        className="form-control" placeholder="Ingrese su Edad" aria-label="Username" aria-describedby="basic-addon1"/>
+        className="form-control" value={Edad} placeholder="Ingrese su Edad" aria-label="Username" aria-describedby="basic-addon1"/>
     </div>
 
     <div className="input-group mb-3">
@@ -71,7 +98,7 @@ function App() {
           onChange={(event) => {
             setDepartamento(event.target.value);
           }}
-        className="form-control" placeholder="Ingrese su Departamento" aria-label="Username" aria-describedby="basic-addon1"/>
+        className="form-control" value={Departamento} placeholder="Ingrese su Departamento" aria-label="Username" aria-describedby="basic-addon1"/>
     </div>
 
     <div className="input-group mb-3">
@@ -80,7 +107,7 @@ function App() {
           onChange={(event) => {
             setCargo(event.target.value);
           }}
-        className="form-control" placeholder="Ingrese su Cargo" aria-label="Username" aria-describedby="basic-addon1"/>
+        className="form-control" value={Cargo} placeholder="Ingrese su Cargo" aria-label="Username" aria-describedby="basic-addon1"/>
     </div>
 
     <div className="input-group mb-3">
@@ -89,7 +116,7 @@ function App() {
               onChange={(event) => {
                 setFecha_Ingreso(event.target.value);
               }}
-        className="form-control" placeholder="Ingrese su Cargo" aria-label="Username" aria-describedby="basic-addon1"/>
+        className="form-control" value={Fecha_Ingreso} placeholder="Ingrese su Cargo" aria-label="Username" aria-describedby="basic-addon1"/>
     </div>
 
     <div className="input-group mb-3">
@@ -98,15 +125,19 @@ function App() {
             onChange={(event) => {
               setAntiguedad(event.target.value);
             }}
-        className="form-control" placeholder="Ingrese su Antiguedad" aria-label="Username" aria-describedby="basic-addon1"/>
+        className="form-control" value={Antiguedad} placeholder="Ingrese su Antiguedad" aria-label="Username" aria-describedby="basic-addon1"/>
     </div>
-
-     <p className="card-text">
-      
-     </p>
-    <a href="Registrar"><button className="btn btn-primary" onClick={add}>Registrar</button></a>
-  </div>
-  
+      <div className="card-footer text-muted">
+      {
+        editar?
+        <div>
+        <button className="btn btn-warning m-2" onClick={update}>Actualizar</button>
+        <button className="btn btn-info m-2" onClick={add}>Cancelar</button>
+        </div>
+        :<button type="button" className="btn btn-success" onClick={add}>Registrar</button>
+      }
+      </div>
+    
 </div>
 
   <table className="table table-striped">
@@ -119,6 +150,7 @@ function App() {
       <th scope="col">Cargo</th>
       <th scope="col">Fecha de Ingreso</th>
       <th scope="col">Antiguedad</th>
+      <th scope="col">Acciones</th>
     </tr>
   </thead>
   <tbody>
@@ -132,6 +164,16 @@ function App() {
                 <td>{val.cargo}</td>
                 <td>{val.fecha_ingreso}</td>
                 <td>{val.antiguedad}</td>
+                <td>
+                <div className="btn-group" role="group" aria-label="Basic example">
+                  <button type="button" 
+                  onClick={()=>{
+                    editarEmpleado(val)
+                  }}
+                  className="btn btn-info m-1">Editar</button>
+                  <button type="button" className="btn btn-danger m-1">Eliminar</button>
+                </div>
+                </td>
                </tr>
       })
     }
@@ -142,7 +184,7 @@ function App() {
   <div className="card-footer text-body-secondary">
     Elaborado Por: Maycol Bautista
   </div>
-
+  </div>
     </div>
   );
 }
