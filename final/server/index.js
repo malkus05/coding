@@ -70,6 +70,19 @@ app.put("/update", (req, res) => {
         });
 });
 
+app.delete("/delete/:id", (req, res) => {
+    const id = req.params.id;
+    db.query("DELETE FROM empleados WHERE id=?", id, 
+         (err, result) => {
+            if (err) {
+                console.log(err);
+                res.status(500).json({ error: "Error al Eliminar el empleado" });
+            } else {
+                res.status(200).json({ message: "Empleado Eliminado con Éxito" });
+            }
+        });
+});
+
 app.listen(3001, () => {
     console.log("Corriendo en puerto 3001");
 });

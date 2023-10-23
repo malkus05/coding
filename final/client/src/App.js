@@ -1,14 +1,12 @@
 import './App.css';
 import { useState, useEffect } from "react";
-import axios from "axios";
+import axios, { Axios } from "axios";
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 import Swal from 'sweetalert2'
-import withReactContent from 'sweetalert2-react-content'
-
-const notify = withReactContent(Swal)
 
 function App() {
+
   const [Nombre, setNombre] = useState("");
   const [Edad, setEdad] = useState(0);
   const [Departamento, setDepartamento] = useState("");
@@ -20,10 +18,6 @@ function App() {
   const [editar, setEditar] = useState(false);
   const [empleadosList, setEmpleados] = useState([]);
 
-  useEffect(() => {
-    getEmpleados();
-  }, []);
-
   const add = () => {
     axios.post("http://localhost:3001/create", {
       nombre: Nombre,
@@ -34,6 +28,18 @@ function App() {
       antiguedad: Antiguedad,
     }).then(() => {
       limpiarCampos();
+      Swal.fire({
+        title: "<strong>Registro exitoso!!!</strong>",
+        html: "<i>El empleado <strong>"+nombre+"</strong> fue registrado con éxito!!!</i>",
+        icon: 'success',
+        timer:3000
+      })
+    }).catch(function(error){
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: JSON.parse(JSON.stringify(error)).message==="Network Error"?"Intente más tarde":JSON.parse(JSON.stringify(error)).message
+      })
     });
   }
 
@@ -49,9 +55,54 @@ function App() {
     }).then(() => {
       getEmpleados();
       limpiarCampos();
+      Swal.fire({
+        title: "<strong>Actualización exitosa!!!</strong>",
+        html: "<i>El empleado <strong>"+nombre+"</strong> fue actualizado con éxito!!!</i>",
+        icon: 'success',
+        timer:3000
+      }).catch(function(error){
+        Swal.fire({
+          icon: 'error',
+          title: 'Oops...',
+          text: JSON.parse(JSON.stringify(error)).message==="Network Error"?"Intente más tarde":JSON.parse(JSON.stringify(error)).message
+        })
+      });
     });
   }
 
+  const eliminarEmpleado = (val) => {
+    Swal.fire({
+    title: 'Confirmar eliminado?',
+    html: "<i>Realmente desea eliminar a <strong>"+val.nombre+"</strong>?</i>",
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonColor: '#3085d6',
+    cancelButtonColor: '#d33',
+    confirmButtonText: 'Si, eliminarlo!'
+  }).then((result) => {
+    if (result.isConfirmed) {  
+    Axios.delete(`http://localhost:3001/delete/${val.id}`).then((res)=>{      
+      getEmpleados();
+      limpiarCampos();
+      Swal.fire({
+        icon: 'success',
+        title: val.nombre+' fue eliminado.',
+        showConfirmButton: false,
+        timer: 2000
+      });
+    }).catch(function(error){
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: 'No se logró eliminar el empleado!',
+        footer: JSON.parse(JSON.stringify(error)).message==="Network Error"?"Intente más tarde":JSON.parse(JSON.stringify(error)).message
+      })
+    });
+        
+  }
+});
+
+}
   const limpiarCampos = ()=>{
     setNombre("");
     setEdad("");
@@ -74,22 +125,23 @@ const editarEmpleado = (val)=>{
   setId(val.id);
  }
 
-  const getEmpleados = () => {
-    axios.get("http://localhost:3001/empleados").then((response) => {
+  const getEmpleados = ()=>{
+    axios.get("http://localhost:3001/empleados").then((response)=>{
       setEmpleados(response.data);
     });
   }
-
+  getEmpleados();
+  
   return (
     <div className="container">
+
     <div className="datos"></div>
    
-      <div className="card text-center">
-  <div className="card-header">
+    <div className="card text-center">
+      <div className="card-header">
     MAESTRO DE EMPLEADOS
   </div>
   <div className="card-body">
-
     <div className="input-group mb-3">
         <span className="input-group-text" id="basic-addon1">Nombre: </span>
         <input type="text" 
@@ -199,6 +251,7 @@ const editarEmpleado = (val)=>{
  
   <div className="card-footer text-body-secondary">
     Elaborado Por: Maycol Bautista
+    maicol.bautista@gmail.com
   </div>
   </div>
     </div>
