@@ -1,4 +1,5 @@
 const express = require("express");
+import { PORT }   from './config.js';
 const app = express();
 const mysql = require("mysql");
 const cors = require("cors");
@@ -6,11 +7,19 @@ const cors = require("cors");
 app.use(cors());
 app.use(express.json());
 
+import {
+    DB_HOST,
+    DB_NAME,
+    DB_PASSWORD,
+    DB_PORT,
+    DB_USER,
+} from "./config.js"
+
 const db = mysql.createConnection({
-    host: "localhost",
-    user: "root",
-    password: "",
-    database: "empleados_final"
+    host: DB_HOST,
+    user: DB_USER,
+    password: DB_PASSWORD,
+    database: DB_NAME,
 });
 
 db.connect((err) => {
@@ -102,6 +111,5 @@ app.delete("/delete/:id", (req, res) => {
 });
 
 
-app.listen(3001, () => {
-    console.log("Corriendo en puerto 3001");
-});
+app.listen(PORT);
+console.log(`Escuchando en`, PORT);
