@@ -251,7 +251,7 @@ const editarEmpleado = (val)=>{
  
   <div className="card-footer text-body-secondary">
     Elaborado Por: Maycol Bautista
-    maicol.bautista@gmail.com
+    <div>maicol.bautista@gmail.com</div>
   </div>
   </div>
     </div>
