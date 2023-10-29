@@ -77,49 +77,53 @@ function App() {
   
   
   const eliminarEmpleado = (val) => {
-    if (val.id !== undefined) {
-        Swal.fire({
-            title: 'Confirmar eliminado?',
-            html: `<i>¿Realmente desea eliminar a <strong>${val.nombre}</strong>?</i>`,
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            confirmButtonText: 'Sí, eliminarlo!'
-        }).then(async (result) => {
-            if (result.isConfirmed) {
-                try {
-                    const response = await axios.delete(`http://localhost:3001/delete/${val.id}`);
-                    if (response.status === 200) {
-                        getEmpleados();
-                        limpiarCampos();
-                        Swal.fire({
-                            icon: 'success',
-                            title: `${val.nombre} fue eliminado.`,
-                            showConfirmButton: false,
-                            timer: 2000
-                        });
-                    } else {
-                        Swal.fire({
-                            icon: 'error',
-                            title: 'Oops...',
-                            text: 'No se logró eliminar el empleado.'
-                        });
-                    }
-                } catch (error) {
-                    Swal.fire({
-                        icon: 'error',
-                        title: 'Oops...',
-                        text: 'No se logró eliminar el empleado!',
-                        footer: error.message === 'Network Error' ? 'Intente más tarde' : error.message
-                    });
-                }
-            }
-        });
-    } else {
-        console.error("ID no válido");
+    const id = val.id;
+  
+    if (id === undefined || id === null) {
+      console.error("ID no válido");
+      return;
     }
-}
+  
+    Swal.fire({
+      title: 'Confirmar eliminado?',
+      html: `<i>¿Realmente desea eliminar a <strong>${val.nombre}</strong>?</i>`,
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Sí, eliminarlo!'
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        try {
+          const response = await axios.delete(`http://localhost:3001/delete/${id}`);
+          if (response.status === 200) {
+            getEmpleados();
+            limpiarCampos();
+            Swal.fire({
+              icon: 'success',
+              title: `${val.nombre} fue eliminado.`,
+              showConfirmButton: false,
+              timer: 2000
+            });
+          } else {
+            Swal.fire({
+              icon: 'error',
+              title: 'Oops...',
+              text: 'No se logró eliminar el empleado.'
+            });
+          }
+        } catch (error) {
+          Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: 'No se logró eliminar el empleado!',
+            footer: error.message === 'Network Error' ? 'Intente más tarde' : error.message
+          });
+        }
+      }
+    });
+  }
+  
 
 
   const limpiarCampos = ()=>{
@@ -208,12 +212,12 @@ getEmpleados();
     </div>
 
     <div className="input-group mb-3">
-        <span className="input-group-text" id="basic-addon1">Antiguedad: </span>
+        <span className="input-group-text" id="basic-addon1">Experiencia: </span>
         <input type="number" 
             onChange={(event) => {
               setAntiguedad(event.target.value);
             }}
-        className="form-control" value={Antiguedad} placeholder="Ingrese su Antiguedad" aria-label="Username" aria-describedby="basic-addon1"/>
+        className="form-control" value={Antiguedad} placeholder="Ingrese su Experiencia en el Cargo" aria-label="Username" aria-describedby="basic-addon1"/>
     </div>
       <div className="card-footer text-muted">
       {
@@ -237,7 +241,7 @@ getEmpleados();
       <th scope="col">Departamento</th>
       <th scope="col">Cargo</th>
       <th scope="col">Perfil Profesional</th>
-      <th scope="col">Antiguedad</th>
+      <th scope="col">Experiencia</th>
       <th scope="col">Acciones</th>
     </tr>
   </thead>
